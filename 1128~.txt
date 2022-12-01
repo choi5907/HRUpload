@@ -1,0 +1,78 @@
+포폴 수정
+1. 쫓는 적 애니메이션
+2. 순간이동 적 글리치 효과
+3. 언덕 학교 오브젝트
+4. 지역확장 ( 1층, 2층 )
+
+>>11.28
+오래된 Legacy 애니메이션과 스크립트제어문 교체
+참고 - ( https://www.youtube.com/watch?v=fIsd7peAct0 )
+C# - Virtual
+Unity - FSM 상태 패턴 ( State Pattern )
+https://ansohxxn.github.io/design%20pattern/chapter11/
+
+◆ 다형성
+- 기본 클래스 > 객체 생성
+클래스명 객체이름 = new 클래스명();
+부모 클래스명 객체이름 = new 부모/자식 클래스명();
+
+- 상속, 오버라이딩
+class 부모{
+ public void 함수(){}
+}
+class 자식{
+ public new void 함수(){}
+}
+부모에게 상속받은 함수와 이름이 동일하나 완전히 다른 새로운 함수
+new를 붙이지 않아도 작동하지만 붙여주는게 좋다.
+
+- 가상함수 ( virtual )
+class 부모{
+  public virtual void 함수(){}
+}
+class 자식{
+  public override void 함수(){}
+}
+// 부모 클래스의 함수엔 virtual 가상함수를 포함하여 생성
+// 자식 클래스의 함수엔 override 오버라이딩 함수로 생성
+
+- 업캐스팅
+class 부모{
+  public virtual void 함수(){}
+}
+class 자식{
+  public void 함수(){}
+}
+// 부모 클래스의 가상함수를 자식 클래스가 오버라이딩 하지
+않았으므로 관련없이 이름만 같은 함수를 정의했다. new와 동일
+C++, C#은 Java와 달리 참조하는 '변수'의 타입을 기준으로 멤버함수 호출
+가상함수여서 다형성을 실행하는게 아니라면 변수의 타입을 기준으로 호출
+
+- base 키워드
+Class 클래스명{
+  public virtual void 함수()
+}
+Class 클래스명:부모클래스명{
+  public override void 함수(){
+    base.부모함수();
+    추가기능함수();
+  }
+}
+// base.함수명(); base키워드를 사용하여 기능을 추가하여
+오버라이딩할 수 있다.
+
+- sealed 상속제한
+public sealed override void 함수명(){}
+// 자기 세대까지만 상속을 제한한다.
+
+- abstract 추상클래스 상속
+abstract public class 클래스명 : 모노비헤이비어{
+  abstract public void 변수();
+}
+// 부모 함수에서 본문을 정의할 수 없지만 override를 통해 작성하여 사용한다.
+
+- Interface 멤버필드 사용불가
+// abastract는 개념적으로 계층적인 구조에서 사용 ( 동물 사물의 계층구조 )
+Interface는 서로다른 계층이나 타입에서도 같은 기능추가 ( 사람기계의 Speak )
+
+◆상태 패턴 정의
