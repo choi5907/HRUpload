@@ -76,3 +76,50 @@ abstract public class 클래스명 : 모노비헤이비어{
 Interface는 서로다른 계층이나 타입에서도 같은 기능추가 ( 사람기계의 Speak )
 
 ◆상태 패턴 정의
+
+public class State : MonoBeHaviour{
+  public virtual State Tick(){}
+}
+public class IdleState : State{
+  PursueTargetState pursueTargetState;
+  Awake(){ 함수 = GetComponent<>();
+  bool hasTarget;
+  public override State Tick(){
+    if(hasTarget){
+      return pursueTargetState;
+    }else{
+      return this;
+    }
+  }
+}
+public class PursueTargetState : State{
+  public override State Tick(){
+    return this;
+  }
+}
+public class ZomMov : MonoBeHaviour{
+  public IdleState startingState;
+  private State currentState;
+  Awake(){ currentState = startingState; }
+  FixedUpdate(){ HandleStateMachine(); }
+  HandleStateMachine(){ 
+  State nextState;
+  if(currentState != null){
+    nextState = currentState.Tick();
+    if(nextState != null){
+      currentState = nextState;
+      }
+    }
+  }
+}
+
+◆ 주변 콜라이더 탐색
+Physics.OverlapSphere()
+// 정의해 준 콜라이더 범위 내에 접촉한 콜라이더에 대한 정보를 반환
+OverlapSphere(Vector3 position, float radius, int layerMask = AllLayers, QueryTriggerInteractionqueryTriggerInteraction = QueryTriggerInteraction.UseGlobal)
+// (구체의중심, 구의반지름, 충돌계층, 트리거 작동여부)
+// 반환 값 : 접촉한 모든 콜라이더나 내부의 구체와 함께 배열을 반환
+
+◆ Vector3.Angle
+
+EP.9 7:42
