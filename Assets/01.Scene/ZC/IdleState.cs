@@ -25,6 +25,8 @@ public class IdleState : State
         pursueTargetState = GetComponent<PursueTargetState>();
     }
 
+    // 대상을 찾았는지 확인하는 bool 변수
+    // 만약 대상을 찾았다면 pursueTargetState를 리턴, 아닐경우 자신 리턴
     [SerializeField] bool hasTarget;
     public override State Tick(){
         if(hasTarget){
@@ -35,7 +37,7 @@ public class IdleState : State
             return this;
         }
     }
-
+        // 좀비의 주변 반경에서 플레이어 컴포넌트가 포함 된 콜라이더를 탐색하는 함수
     private void FIndATargetViaLineOfSight(){
         // detectionLayer의 detectionRadius 반경 내에 있는 모든  콜라이더 탐색
         Collider[] colliders = Physics.OverlapSphere(transform.position, detectionRadius, detectionLayer);
@@ -43,11 +45,11 @@ public class IdleState : State
         // 충돌한 모든 콜라이더 중 플레이어무브먼트의 콜라이더를 찾는다.
         for(int i = 0; i < colliders.Length; i++){
             PlayerMovement player = colliders[i].transform.GetComponent<PlayerMovement>();
-            
-            // 플레이어무브먼트가 감지되면 시야를 확인
-            if(player != null){
-                // 플레이어가 현재대상의 앞에 있을 경우
+            if(player != null){     // 플레이어 변수에 콜라이더가 들어있다면
+                                    // 플레이어가 현재대상의 앞의 시야각 안에 있을 경우를 확인
                 Vector3 targetDirection = transform.position - player.transform.position;
+                // 다른 2개 오브젝트의 방향성 벡터를 구하고 이 사이의 각도를 구하는 함수
+                // Angle(시작점, 도착점); 두 벡터 사이의 가능한 각도중 작은 각도를 반환한다.(180도 이내)
                 float viewableAngle = Vector3.Angle(targetDirection, transform.forward);
 
                 if(viewableAngle > minimumDetectionRadiusAngle && viewableAngle < maximumDetectionRadiusAngle){

@@ -11,23 +11,23 @@ public class ZomMov : MonoBehaviour
     [SerializeField] private State currentState;
 
     private void Awake(){
-        currentState = startingState;
+        currentState = startingState;           // 현재상태 = 시작상태 초기화
     }
     
-    private void FixedUpdate()
+    private void FixedUpdate()                  // 상태 변환 기능을 사용하는 함수
     {
-        HandleStateMachine();
+        HandleStateMachine();                   
     }
 
     private void HandleStateMachine(){
         // Run logic, based on which state we are currently in
         // If logic is met to switch to the next state, we change states
-        State nextState;
-        if(currentState != null){
-            // Run logic
-            nextState = currentState.Tick();
-            if(nextState != null){
-                currentState = nextState;
+        State nextState;                        // 다음 상태 선언
+        if(currentState != null){               // 현재상태가 비어있지 않다면
+            // Run logic      
+            nextState = currentState.Tick();    // 다음 상태.Tcik() 함수 실행
+            if(nextState != null){              // 그리고 만약 다음 상태도 비어있지 않다면
+                currentState = nextState;       // 현재상태 = 다음상태
             }
         }
     }
