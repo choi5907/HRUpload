@@ -121,5 +121,9 @@ OverlapSphere(Vector3 position, float radius, int layerMask = AllLayers, QueryTr
 // 반환 값 : 접촉한 모든 콜라이더나 내부의 구체와 함께 배열을 반환
 
 ◆ Vector3.Angle
+// 다른 2개 오브젝트의 방향성 벡터를 구하고 이 사이의 각도를 구하는 함수
+// Angle(시작점, 도착점); 두 벡터 사이의 가능한 각도중 작은 각도를 반환한다.(180도 이내)
 
-EP.9 7:42
+검색해서 찾은 플레이어 컴포넌트를 가진 오브젝트를 할당하여 대상으로 지정하는 방법
+
+0800
