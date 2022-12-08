@@ -126,4 +126,4 @@ OverlapSphere(Vector3 position, float radius, int layerMask = AllLayers, QueryTr
 
 검색해서 찾은 플레이어 컴포넌트를 가진 오브젝트를 할당하여 대상으로 지정하는 방법
 
-0800
+1050

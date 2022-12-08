@@ -25,20 +25,17 @@ public class IdleState : State
         pursueTargetState = GetComponent<PursueTargetState>();
     }
 
-    // 대상을 찾았는지 확인하는 bool 변수
-    // 만약 대상을 찾았다면 pursueTargetState를 리턴, 아닐경우 자신 리턴
-    [SerializeField] bool hasTarget;
-    public override State Tick(){
-        if(hasTarget){
-            Debug.Log("We have found a target");
-            return pursueTargetState;
+    // ZomMov.cs를 매개변수로 받은 Tick을 오버라이드한 변수
+    public override State Tick(ZomMov zomMov){
+        if(zomMov.currentTarget != null){       // zomMov.currentTarget이 있을 경우
+            return pursueTargetState;           // 쫓는다
         }else{
-            Debug.Log("We have no target yet.");
+            FIndATargetViaLineOfSight(zomMov);  // 없는 경우 주변을 탐색하는 함수 사용
             return this;
         }
     }
-        // 좀비의 주변 반경에서 플레이어 컴포넌트가 포함 된 콜라이더를 탐색하는 함수
-    private void FIndATargetViaLineOfSight(){
+        // 좀비의 주변 반경에서 플레이어 컴포넌트가 포함 된 콜라이더를  탐색하는 함수
+    private void FIndATargetViaLineOfSight(ZomMov zomMov){
         // detectionLayer의 detectionRadius 반경 내에 있는 모든  콜라이더 탐색
         Collider[] colliders = Physics.OverlapSphere(transform.position, detectionRadius, detectionLayer);
         
@@ -51,9 +48,10 @@ public class IdleState : State
                 // 다른 2개 오브젝트의 방향성 벡터를 구하고 이 사이의 각도를 구하는 함수
                 // Angle(시작점, 도착점); 두 벡터 사이의 가능한 각도중 작은 각도를 반환한다.(180도 이내)
                 float viewableAngle = Vector3.Angle(targetDirection, transform.forward);
-
+                
                 if(viewableAngle > minimumDetectionRadiusAngle && viewableAngle < maximumDetectionRadiusAngle){
                     
+                    zomMov.currentTarget = player;
                 }
             }
         }
